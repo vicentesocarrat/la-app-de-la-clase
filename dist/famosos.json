@@ -54,5 +54,9 @@
   {
     "nombre": "Usain Bolt",
     "foto": "famosos/usain-bolt.jpg"
+  },
+  {
+    "nombre": "Beyoncé",
+    "foto": "famosos/beyonce.jpg"
   }
 ]
