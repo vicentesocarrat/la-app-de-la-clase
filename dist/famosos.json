@@ -1,0 +1,58 @@
+[
+  {
+    "nombre": "Albert Einstein",
+    "foto": "famosos/albert-einstein.jpg"
+  },
+  {
+    "nombre": "Bad Bunny",
+    "foto": "famosos/bad-bunny.jpg"
+  },
+  {
+    "nombre": "Billie Eilish",
+    "foto": "famosos/billie-eilish.jpg"
+  },
+  {
+    "nombre": "Cristiano Ronaldo",
+    "foto": "famosos/cristiano-ronaldo.jpg"
+  },
+  {
+    "nombre": "Dua Lipa",
+    "foto": "famosos/dua-lipa.jpg"
+  },
+  {
+    "nombre": "Ibai Llanos",
+    "foto": "famosos/ibai-llanos.jpg"
+  },
+  {
+    "nombre": "Lamine Yamal",
+    "foto": "famosos/lamine-yamal.jpg"
+  },
+  {
+    "nombre": "Lionel Messi",
+    "foto": "famosos/lionel-messi.jpg"
+  },
+  {
+    "nombre": "MrBeast",
+    "foto": "famosos/mrbeast.jpg"
+  },
+  {
+    "nombre": "Rafa Nadal",
+    "foto": "famosos/rafa-nadal.jpg"
+  },
+  {
+    "nombre": "Rosalía",
+    "foto": "famosos/rosalia.jpg"
+  },
+  {
+    "nombre": "Shakira",
+    "foto": "famosos/shakira.jpg"
+  },
+  {
+    "nombre": "Taylor Swift",
+    "foto": "famosos/taylor-swift.jpg"
+  },
+  {
+    "nombre": "Usain Bolt",
+    "foto": "famosos/usain-bolt.jpg"
+  }
+]
