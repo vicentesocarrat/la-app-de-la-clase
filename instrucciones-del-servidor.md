@@ -50,11 +50,12 @@ Siempre abajo: tabla pequeña con `puntos`.
 
 ## Los famosos
 
-- Las fotos de los famosos van en la carpeta `famosos/` de este repositorio, una por persona, con su nombre como nombre
-  de archivo: `famosos/Lionel Messi.jpg`, `famosos/Rosalía.png` (jpg, png o webp; mejor cuadradas, unos 800 px).
-- El servidor del aula descarga este repositorio cada minuto y sortea el famoso entre las fotos de esa carpeta: para
-  añadir un famoso basta con añadir su foto. La app NO tiene que leer la carpeta: recibe la foto ya elegida en
-  `yo.eres.foto` y `desvelado.foto` (direcciones del tipo `https://ia.socarrat.com/juego/famosos/…`).
+- Las fotos de los famosos se guardan donde quieras dentro de este repositorio, con una sola condición: dentro de una
+  carpeta cuyo nombre contenga «famosos» (por ejemplo `famosos/` o `img/famosos/`). Una foto por persona, y el nombre
+  del archivo es el nombre que se muestra: `Lionel Messi.jpg`, `rosalia.png` (jpg, png o webp).
+- El servidor del aula descarga este repositorio cada minuto y sortea el famoso entre esas fotos: para añadir un famoso
+  basta con añadir su foto. La app NO tiene que leer la carpeta ni tener una lista: recibe la foto ya elegida en
+  `yo.eres.foto` y `desvelado.foto`.
 
 ## Botones
 
@@ -64,7 +65,7 @@ Siempre abajo: tabla pequeña con `puntos`.
 
 ## Instalable y que se actualice sola
 
-- `manifest.json` (nombre, colores #0B0B0A / #FFED00, el icono `icon.png` que se sube al repositorio, en 192 y 512, `display: standalone`) + etiquetas para iPhone (`apple-touch-icon`, `apple-mobile-web-app-capable`).
+- `manifest.json` (nombre, colores #0B0B0A / #FFED00, el icono de la app en 192 y 512 px, `display: standalone`) + etiquetas para iPhone (`apple-touch-icon`, `apple-mobile-web-app-capable`).
 - Service worker **red primero**: pide siempre los archivos de la app a internet y usa la caché solo sin conexión.
   Nunca guarda en caché nada de `/api/` (el estado de la partida tiene que estar siempre al día).
 - Una constante de versión en el service worker (`const VERSION = 'v1'`) que se sube en cada cambio, con `skipWaiting()` + `clients.claim()` y borrado de cachés antiguas.
