@@ -1,5 +1,5 @@
 'use strict';
-const VERSION='2', API='https://ia.socarrat.com/api/app/juego';
+const VERSION='3', API='https://ia.socarrat.com/api/app/juego';
 const screen=document.querySelector('#screen'), connection=document.querySelector('#connection');
 let session=null, state=null, lastView='', pollTimer, rollingTimer, soundContext, busy=false, joined=false, tickBusy=false, registration, updating=false;
 try{session=JSON.parse(localStorage.getItem('adivina-session')||'null');if(!session?.nombre||!session?.codigo)session=null;}catch{session=null;}
@@ -32,21 +32,7 @@ function portrait(url,name){let safe='';try{const parsed=new URL(url);if(parsed.
 function refreshScores(s){const box=document.querySelector('#scoreboard');box.hidden=false;const rows=Array.isArray(s.puntos)?s.puntos:[];box.innerHTML=`<p class="section-heading" style="margin-top:0">MARCADOR</p><div class="scores">${rows.length?rows.map(p=>`<span class="score">${esc(p.nombre)}${p.nombre===session?.nombre?' · tú':''}<b>${esc(p.puntos)}</b></span>`).join(''):'<span class="muted">La primera pista está por llegar.</span>'}</div>`;}
 function startRoulette(s){const names=Array.isArray(s.jugadores)?s.jugadores:[],duration=Math.max(500,Math.min(Number(s.ruletaMs)||4000,10000)),start=performance.now();let index=0;function tick(){const el=document.querySelector('#roulette-name');if(!el)return;const progress=(performance.now()-start)/duration;el.textContent=progress>=1?(s.responde||'…'):(names[index++%Math.max(1,names.length)]||'…');beep(380+Math.min(progress,1)*250,.04);if(progress<1)rollingTimer=setTimeout(tick,75+progress*260);}tick();}
 let confettiCleanup;
-function celebrate(){
- playSound('win');if(reduced)return;if(confettiCleanup)confettiCleanup();
- const layer=document.createElement('div');layer.className='confetti-layer';layer.setAttribute('aria-hidden','true');document.body.append(layer);
- const animations=[],timers=[];const rand=(min,max)=>min+Math.random()*(max-min);
- const cleanup=()=>{animations.forEach(a=>a.cancel());timers.forEach(clearTimeout);layer.remove();};confettiCleanup=cleanup;
- const count=innerWidth<600?76:108,height=innerHeight;
- for(let i=0;i<count;i++){
-  const depth=Math.random(),size=4+depth*7,startX=rand(-40,innerWidth+40),drift=rand(-150,150),sway=rand(16,64),phase=rand(0,Math.PI*2),duration=rand(4900,7900),delay=rand(0,2200);
-  const piece=document.createElement('i');piece.className='confetti-piece';const foil=i%4===0;
-  piece.style.cssText=`width:${size}px;height:${size*rand(.6,1.9)}px;border-radius:${i%5===0?'50%':'1px'};background:${foil?'linear-gradient(115deg,#8e661e,#fff1b2 40%,#d9ab44 65%,#fff0b1)':i%4===1?'#fffcec':'#ffed00'};opacity:${.5+depth*.5};`;
-  const spin=rand(-540,540),flips=rand(1,2),frames=[];for(let k=0;k<=24;k++){const t=k/24;frames.push({offset:t,transform:`translate3d(${startX+drift*t+Math.sin(t*Math.PI*3+phase)*sway*t}px,${-35+(height+110)*(t*.6+t*t*.4)}px,0) rotateZ(${spin*t}deg) rotateY(${flips*360*t}deg)`,opacity:t>.83?(1-t)/.17*(.5+depth*.5):.5+depth*.5});}
-  layer.append(piece);const anim=piece.animate(frames,{duration,delay,fill:'both',easing:'linear'});animations.push(anim);anim.onfinish=()=>piece.remove();
- }
- timers.push(setTimeout(()=>{cleanup();if(confettiCleanup===cleanup)confettiCleanup=null;},10500));
-}
+function celebrate(){playSound('win');if(confettiCleanup)confettiCleanup();confettiCleanup=window.launchConfetti();}
 
 function render(s){
  const yo=s.yo||{},phase=s.fase||'espera';
