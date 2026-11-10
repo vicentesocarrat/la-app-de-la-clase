@@ -48,6 +48,14 @@ Ficha técnica para quien programe la app «Adivina el personaje». La lógica d
 
 Siempre abajo: tabla pequeña con `puntos`.
 
+## Los famosos
+
+- Las fotos de los famosos van en la carpeta `famosos/` de este repositorio, una por persona, con su nombre como nombre
+  de archivo: `famosos/Lionel Messi.jpg`, `famosos/Rosalía.png` (jpg, png o webp; mejor cuadradas, unos 800 px).
+- El servidor del aula descarga este repositorio cada minuto y sortea el famoso entre las fotos de esa carpeta: para
+  añadir un famoso basta con añadir su foto. La app NO tiene que leer la carpeta: recibe la foto ya elegida en
+  `yo.eres.foto` y `desvelado.foto` (direcciones del tipo `https://ia.socarrat.com/juego/famosos/…`).
+
 ## Botones
 
 - «Ya he preguntado»: `POST https://ia.socarrat.com/api/app/juego/pase` con `{"id":"ID"}`
@@ -56,8 +64,9 @@ Siempre abajo: tabla pequeña con `puntos`.
 
 ## Instalable y que se actualice sola
 
-- `manifest.json` (nombre, colores #0B0B0A / #FFED00, `icon.png` en 192 y 512, `display: standalone`) + etiquetas para iPhone (`apple-touch-icon`, `apple-mobile-web-app-capable`).
+- `manifest.json` (nombre, colores #0B0B0A / #FFED00, el icono `icon.png` que se sube al repositorio, en 192 y 512, `display: standalone`) + etiquetas para iPhone (`apple-touch-icon`, `apple-mobile-web-app-capable`).
 - Service worker **red primero**: pide siempre los archivos de la app a internet y usa la caché solo sin conexión.
-  Nunca guarda en caché las respuestas de `ia.socarrat.com`.
+  Nunca guarda en caché nada de `/api/` (el estado de la partida tiene que estar siempre al día).
 - Una constante de versión en el service worker (`const VERSION = 'v1'`) que se sube en cada cambio, con `skipWaiting()` + `clients.claim()` y borrado de cachés antiguas.
-- Archivos estáticos sencillos (HTML, CSS, JS), rutas relativas, para que GitHub Pages lo publique tal cual en `/la-app-de-la-clase/`.
+- Dónde se publica: el servidor del aula sirve este repositorio tal cual en **https://ia.socarrat.com/juego/** (lo descarga de la rama `main` cada minuto). Archivos estáticos sencillos (HTML, CSS, JS), sin paso de compilación, y rutas relativas (`./`), porque la app vive dentro de `/juego/`. `start_url` y `scope` del manifest: `./`.
+- Como la app y el servidor están en el mismo dominio, las llamadas pueden ir a `/api/app/…` directamente.
